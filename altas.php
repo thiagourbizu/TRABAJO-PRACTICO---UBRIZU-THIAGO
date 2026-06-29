@@ -20,8 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST['usuario'];
     $passwordA = $_POST['passwordA']; 
     $passwordB = $_POST['passwordB']; 
-    
-    // Capturamos la fecha real que envía el formulario web
     $fecha_nacimiento = $_POST['fecha_nacimiento'];
     
     // PASSWORDS iguales
