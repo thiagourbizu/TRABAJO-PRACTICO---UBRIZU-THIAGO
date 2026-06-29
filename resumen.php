@@ -26,7 +26,6 @@ if ($conn->connect_error) {
 }
 
 // Traemos datos de la tarjeta y sus liquidaciones, filtrando por el DNI del usuario logueado
-// El ORDER BY periodo DESC es la clave para que la más nueva quede primera
 $sql = "SELECT t.numero_tarjeta, t.banco_emisor, l.periodo, l.fecha_vencimiento, l.total_a_pagar, l.pago_minimo 
         FROM tarjetas t
         INNER JOIN liquidaciones l ON t.num_cuenta = l.num_cuenta
@@ -39,7 +38,6 @@ $stmt->execute();
 $resultado = $stmt->get_result();
 
 // AISLAR LA LIQUIDACIÓN ACTUAL
-// Al hacer un solo fetch_assoc(), sacamos la primera fila de la caja de resultados
 $liquidacion_actual = $resultado->fetch_assoc();
 
 ?>
