@@ -17,14 +17,14 @@ $host = 'localhost';
 $db   = 'mi_banco_db';
 $user = 'root'; 
 $pass = 'root'; 
-$port = 3307; // 3307 porque tengo otra base en 3306
+$port = 3306; // 3307 porque tengo otra base en 3306
 
+// Instanciamos la conn
 $conn = new mysqli($host, $user, $pass, $db, $port);
 if ($conn->connect_error) {
     die("Error crítico de conexión: " . $conn->connect_error);
 }
 
-// 3. LA CONSULTA SQL (JOIN)
 // Traemos datos de la tarjeta y sus liquidaciones, filtrando por el DNI del usuario logueado
 // El ORDER BY periodo DESC es la clave para que la más nueva quede primera
 $sql = "SELECT t.numero_tarjeta, t.banco_emisor, l.periodo, l.fecha_vencimiento, l.total_a_pagar, l.pago_minimo 
@@ -38,7 +38,7 @@ $stmt->bind_param("s", $documento);
 $stmt->execute();
 $resultado = $stmt->get_result();
 
-// 4. AISLAR LA LIQUIDACIÓN ACTUAL
+// AISLAR LA LIQUIDACIÓN ACTUAL
 // Al hacer un solo fetch_assoc(), sacamos la primera fila de la caja de resultados
 $liquidacion_actual = $resultado->fetch_assoc();
 
@@ -57,7 +57,6 @@ $liquidacion_actual = $resultado->fetch_assoc();
         <h1 class="text-xl font-semibold">Mis <span class="font-bold">Tarjetas</span></h1>
         <div class="flex items-center gap-4">
             <span class="text-sm">Hola, <strong><?php echo htmlspecialchars($nombre_completo); ?></strong></span>
-            <!-- Botón para cerrar sesión (A implementardespués si lo desean) -->
             <a href="cerrar_sesion.php" class="text-xs bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded">Cerrar Sesión</a>
         </div>
     </header>
@@ -65,7 +64,7 @@ $liquidacion_actual = $resultado->fetch_assoc();
     <main class="flex-grow p-6 md:p-12 max-w-6xl mx-auto w-full space-y-8">
         
         <?php if ($liquidacion_actual): ?>
-            <!-- SECCIÓN: LIQUIDACIÓN ACTUAL DESTACADA -->
+            <!-- LIQUIDACION ACTUAL DESTACADA -->
             <section>
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Estado de Cuenta Actual</h2>
                 <div class="bg-white rounded-lg shadow-lg border-l-4 border-[#004691] p-6 flex flex-col md:flex-row justify-between items-center gap-6">
@@ -85,7 +84,7 @@ $liquidacion_actual = $resultado->fetch_assoc();
                 </div>
             </section>
 
-            <!-- SECCIÓN: HISTORIAL DE LIQUIDACIONES -->
+            <!-- HISTORIAL DE LIQUIDACIONES -->
             <section>
                 <h2 class="text-xl font-bold text-gray-800 mb-4">Historial de Resúmenes</h2>
                 <div class="bg-white rounded-lg shadow overflow-hidden">
