@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['documento'] = $documento;
         $_SESSION['nombre_completo'] = $fila['nombre'] . ' ' . $fila['apellido'];
         
-        // Redirigimos al resumen.php que luego agregamos
+        // Redirigimos al resumen.php
         header("Location: resumen.php");
         exit();
     } else {
